@@ -17,7 +17,17 @@ describe 'roundcube' do
 
         it { should contain_class('roundcube::params') }
         it { should contain_class('roundcube::install').that_comes_before('roundcube::config') }
-        it { should contain_class('roundcube::config') }
+        it { should contain_class('roundcube::config').that_comes_before("roundcube::config::#{backend}") }
+        it { should contain_class("roundcube::config::#{backend}").that_comes_before('roundcube') }
+        it { should contain_class('roundcube') }
+
+        it { should create_exec('reconfigure-roundcube')
+              .with_refreshonly(true)
+              .with_command('dpkg-reconfigure roundcube') }
+
+        it { should contain_ini_setting('dbtype')
+              .with_value("'#{backend}'")
+              .with_require("Package[roundcube-#{backend}]") }
 
         it { should contain_package('roundcube').with_ensure('present') }
         it { should contain_package('roundcube-core').with_ensure('present') }
