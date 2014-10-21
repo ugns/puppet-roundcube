@@ -15,5 +15,4 @@ class roundcube (
 
   class { 'roundcube::install': } ->
   class { 'roundcube::config': } ->
-  class { "roundcube::config::${backend}": } ->
   Class['roundcube']}

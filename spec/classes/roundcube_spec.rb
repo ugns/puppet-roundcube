@@ -17,8 +17,7 @@ describe 'roundcube' do
 
         it { should contain_class('roundcube::params') }
         it { should contain_class('roundcube::install').that_comes_before('roundcube::config') }
-        it { should contain_class('roundcube::config').that_comes_before("roundcube::config::#{backend}") }
-        it { should contain_class("roundcube::config::#{backend}") }
+        it { should contain_class('roundcube::config') }
 
         it { should contain_package('roundcube').with_ensure('present') }
         it { should contain_package('roundcube-core').with_ensure('present') }
