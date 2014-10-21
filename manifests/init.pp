@@ -8,12 +8,12 @@
 #   Explanation of what this parameter affects and what it defaults to.
 #
 class roundcube (
+  $backend = $::roundcube::params::backend,
 ) inherits roundcube::params {
 
   # validate parameters here
 
   class { 'roundcube::install': } ->
-  class { 'roundcube::config': } ~>
-  class { 'roundcube::service': } ->
-  Class['roundcube']
-}
+  class { 'roundcube::config': } ->
+  class { "roundcube::config::${backend}": } ->
+  Class['roundcube']}

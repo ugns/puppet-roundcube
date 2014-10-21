@@ -18,9 +18,5 @@ describe 'roundcube class' do
       it { should be_installed }
     end
 
-    describe service('roundcube') do
-      it { should be_enabled }
-      it { should be_running }
-    end
   end
 end
