@@ -26,6 +26,7 @@ describe 'roundcube' do
               .with_command('dpkg-reconfigure roundcube') }
 
         it { should contain_ini_setting('dbtype')
+              .with_setting('dbc_dbtype')
               .with_value("'#{backend}'")
               .with_require("Package[roundcube-#{backend}]") }
 
