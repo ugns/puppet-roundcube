@@ -25,6 +25,12 @@ class roundcube (
 
   class { 'roundcube::install': } ->
   class { 'roundcube::config': } ->
-  class { "roundcube::config::${backend}": } ->
+  class { "roundcube::db::${backend}": } ->
   Class['roundcube']
+
+  exec { 'reconfigure-roundcube':
+    path        => '/usr/sbin:/usr/bin:/sbin:/bin',
+    refreshonly => true,
+    command     => 'dpkg-reconfigure roundcube-core',
+  }
 }

@@ -3,6 +3,16 @@
 class roundcube::install {
   include roundcube::params
 
+  if ! defined(Class[Apt::Backports]) {
+    class { 'apt::backports': }
+  }
+
+  apt::pin { 'roundcube':
+    packages => 'roundcube*',
+    priority => 500,
+    release  => "${::lsbdistcodename}-backports",
+  }->
+
   package { ['roundcube', 'roundcube-core', 'roundcube-plugins']:
     ensure  => present,
     require => Package["roundcube-${roundcube::backend}"],

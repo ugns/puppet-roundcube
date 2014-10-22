@@ -3,22 +3,12 @@
 # This class is called from roundcube
 #
 class roundcube::config {
-  Ini_setting {
-    path    => '/etc/dbconfig-common/roundcube.conf',
+
+  file { "${roundcube::confdir}/main.inc.php":
     ensure  => present,
-    section => '',
-    notify  => Exec['reconfigure-roundcube'],
-    require => Package["roundcube-${roundcube::backend}"],
-  }
-
-  ini_setting {'dbtype':
-    setting => 'dbc_dbtype',
-    value   => "'${roundcube::backend}'",
-  }
-
-  exec { 'reconfigure-roundcube':
-    path        => '/usr/sbin:/usr/bin:/sbin:/bin',
-    refreshonly => true,
-    command     => 'dpkg-reconfigure roundcube',
+    owner   => 'root',
+    group   => 'www-data',
+    mode    => '0640',
+    content => template($roundcube::main_inc_php_erb),
   }
 }

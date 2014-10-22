@@ -9,3 +9,4 @@ project_page  'UNKNOWN'
 
 dependency 'puppetlabs/stdlib', '>= 3.2.0'
 dependency 'puppetlabs/inifile', '>= 1.0.0'
+dependency 'puppetlabs/apt', '>= 1.6.0'
