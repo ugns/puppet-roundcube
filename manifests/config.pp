@@ -11,4 +11,9 @@ class roundcube::config {
     mode    => '0640',
     content => template($roundcube::main_inc_php_erb),
   }
+
+  file { "${apache::confd_dir}/roundcube.conf":
+    ensure => link,
+    target => ${roundcube::conf_dir}/apache.conf",
+  }
 }
