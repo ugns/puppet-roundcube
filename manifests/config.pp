@@ -14,6 +14,11 @@ class roundcube::config {
 
   file { "${apache::confd_dir}/roundcube.conf":
     ensure => link,
-    target => ${roundcube::conf_dir}/apache.conf",
+    target => "${roundcube::conf_dir}/apache.conf",
+  }
+
+  file { "${apache::confd_dir}/javascript-common.conf":
+    ensure => link,
+    target => '/etc/javascript-common/javascript-common.conf',
   }
 }
