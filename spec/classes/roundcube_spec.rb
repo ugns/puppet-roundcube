@@ -132,8 +132,8 @@ describe 'roundcube' do
         :mail_domain         => '%z',
         :force_https         => true,
         :include_host_config => {
-          'webmail.example.com' => 'example.com',
           'webmail.example.org' => 'example.org',
+          'webmail.example.com' => 'example.com',
         },
         :plugins             => [
           'archive',
@@ -198,7 +198,7 @@ describe 'roundcube' do
         .without_content %r{^\$rcmail_config\['include_host_config'\] = false;$} }
 
       it { should contain_file('/etc/roundcube/main.inc.php')
-        .with_content %r{^\$rcmail_config\['include_host_config'\] = array\(\n\s*'webmail.example.com' => 'example.com.inc.php',\n\s*'webmail.example.org' => 'example.org.inc.php',\n\);$} }
+        .with_content %r{^\$rcmail_config\['include_host_config'\] = array\('webmail.example.com' => 'example.com.inc.php','webmail.example.org' => 'example.org.inc.php'\);$} }
 
       it { should contain_file('/etc/roundcube/main.inc.php')
         .without_content %r{^\$rcmail_config\['plugins'\] = array\(\);$} }

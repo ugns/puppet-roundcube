@@ -329,11 +329,7 @@ $rcmail_config['product_name'] = '<%= @product_name ||= "Roundcube Webmail" %>';
 // try to load host-specific configuration
 // see http://trac.roundcube.net/wiki/Howto_Config for more details
 <% if @include_host_config -%>
-$rcmail_config['include_host_config'] = array(
-<% @include_host_config.sort_by {|host,config| host}.each do |host,config| -%>
-        '<%= host %>' => '<%= config %>.inc.php',
-<% end -%>
-);
+$rcmail_config['include_host_config'] = array(<%= @include_host_config.sort_by {|host,config| host}.map { |host,config| "'#{host}' => '#{config}.inc.php'" }.join(',') %>);
 <% else -%>
 $rcmail_config['include_host_config'] = false;
 <% end -%>
