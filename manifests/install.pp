@@ -22,4 +22,10 @@ class roundcube::install {
     ensure => present,
   }
 
+  if $::roundcube::extra_plugins_pkg {
+    package { "roundcube-plugins-extra":
+      ensure => present,
+    }
+  }
+
 }

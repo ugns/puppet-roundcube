@@ -4,7 +4,7 @@
 #
 class roundcube::config {
 
-  file { "${roundcube::confdir}/main.inc.php":
+  file { "${roundcube::conf_dir}/main.inc.php":
     ensure  => present,
     owner   => 'root',
     group   => 'www-data',

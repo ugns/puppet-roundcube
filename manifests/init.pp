@@ -8,7 +8,7 @@
 #   Explanation of what this parameter affects and what it defaults to.
 #
 class roundcube (
-  $confdir             = $::roundcube::params::confdir,
+  $conf_dir            = $::roundcube::params::conf_dir,
   $backend             = $::roundcube::params::backend,
   $database_host       = $::roundcube::params::database_host,
   $database_port       = $::roundcube::params::database_port,
@@ -16,6 +16,7 @@ class roundcube (
   $database_username   = $::roundcube::params::database_username,
   $database_password   = $::roundcube::params::database_password,
   $database_ssl        = $::roundcube::params::database_ssl,
+  $extra_plugins_pkg   = $::roundcube::params::extra_plugins_pkg,
   $main_inc_php_erb    = $::roundcube::params::main_inc_php_erb,
   $log_logins          = undef,
   $default_host        = undef,
@@ -44,7 +45,7 @@ class roundcube (
 
   validate_re($backend, '^(mysql|pgsql|sqlite3)$')
   validate_bool($database_ssl)
-  validate_absolute_path($confdir)
+  validate_absolute_path($conf_dir)
 
   if $include_host_config {
     validate_hash($include_host_config)
