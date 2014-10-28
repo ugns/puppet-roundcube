@@ -46,4 +46,12 @@ class roundcube::db::pgsql {
     setting => 'dbc_ssl',
     value   => "'${roundcube::database_ssl}'",
   }
+
+  postgres::validate_db_connection('validate roundcube postgres connection':
+    database_host     => $roundcube::database_host,
+    database_username => $roundcube::database_username,
+    database_password => $roundcube::database_password,
+    database_name     => $roundcube::database_name,
+    create_db_first   => false,
+  }
 }
