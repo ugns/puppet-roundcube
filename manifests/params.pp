@@ -5,6 +5,7 @@
 #
 class roundcube::params {
   $conf_dir          = '/etc/roundcube'
+  $conf_file         = 'main.inc.php'
   $backend           = 'pgsql'
   $database_host     = $::fqdn
   $database_port     = '5432'

@@ -9,6 +9,7 @@
 #
 class roundcube (
   $conf_dir            = $::roundcube::params::conf_dir,
+  $conf_file           = $::roundcube::params::conf_file,
   $backend             = $::roundcube::params::backend,
   $database_host       = $::roundcube::params::database_host,
   $database_port       = $::roundcube::params::database_port,
