@@ -12,7 +12,7 @@ class roundcube::params {
   $database_username  = 'roundcube'
   $database_password  = 'roundcube'
   $database_ssl       = false
-  $extra_plugins_pkg  = true
+  $manage_database    = true
 
   #LB: two different templates for two different versions of RoundCube
   $conf_file_template = "${module_name}/config.inc.php.erb"
@@ -30,15 +30,17 @@ class roundcube::params {
   #base version to decide things later on (like which conf file to use).
   if ($::osfamily == 'RedHat') {
     if ($operatingsystem in [ 'RedHat', 'CentOS' ] and $::operatingsystemrelease == /^6/) {
-      $base_version    = '1.0'
-      $package_list    = 'roundcubemail'
-      $conf_file       = 'config.inc.php'
-      $conf_file_group = 'apache'
+      $base_version       = '1.0'
+      $package_list       = 'roundcubemail'
+      $conf_file          = 'config.inc.php'
+      $conf_file_group    = 'apache'
+      $extra_plugins_pkg  = false
     }
   } elsif ($::osfamily == 'debian') {
-    $base_version    = '0.x'
-    $                = ['roundcube', 'roundcube-core', 'roundcube-plugins']
-    $conf_file       = 'main.inc.php'
-    $conf_file_group = 'www-data'
+    $base_version       = '0.x'
+    $package_list       = ['roundcube', 'roundcube-core', 'roundcube-plugins']
+    $conf_file          = 'main.inc.php'
+    $conf_file_group    = 'www-data'
+    $extra_plugins_pkg  = true
   }
 }

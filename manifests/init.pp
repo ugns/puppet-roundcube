@@ -24,6 +24,7 @@ class roundcube (
   $database_ssl        = $::roundcube::params::database_ssl,
   $extra_plugins_pkg   = $::roundcube::params::extra_plugins_pkg,
   $main_inc_php_erb    = $::roundcube::params::main_inc_php_erb,
+  $manage_database     = $::roundcube::params::manage_database,
   $log_logins          = undef,
   $default_host        = undef,
   $default_port        = undef,
@@ -66,9 +67,11 @@ class roundcube (
   #automatic module data bindings.
   contain roundcube::install
   contain roundcube::config
-  contain "roundcube::db::${backend}"
   
-  Class[roundcube::install]
-    -> Class[roundcube::config]
-    -> Class["roundcube::db::${backend}"]
+  Class[roundcube::install] -> Class[roundcube::config]
+
+  if ($manage_database) {
+    contain "roundcube::db::${backend}"
+    Class[roundcube::config] -> Class["roundcube::db::${backend}"]
+  }
 }
