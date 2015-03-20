@@ -25,6 +25,7 @@ class roundcube (
   $extra_plugins_pkg   = $::roundcube::params::extra_plugins_pkg,
   $main_inc_php_erb    = $::roundcube::params::main_inc_php_erb,
   $manage_database     = $::roundcube::params::manage_database,
+  $product_name        = $::roundcube::params::product_name,
   $log_logins          = undef,
   $default_host        = undef,
   $default_port        = undef,
@@ -42,12 +43,12 @@ class roundcube (
   $des_key             = undef,
   $username_domain     = undef,
   $mail_domain         = undef,
-  $product_name        = undef,
   $include_host_config = undef,
   $plugins             = undef,
   $skin                = undef,
   $timezone            = undef,
   $default_font        = undef,
+  $extra_config        = undef,
 ) inherits roundcube::params {
 
   validate_re($backend, '^(mysql|pgsql|sqlite3)$')
@@ -60,6 +61,14 @@ class roundcube (
 
   if $plugins {
     validate_array($plugins)
+  }
+
+  #LB: validate the IMAP encryption key presence and size
+  if ($base_version == '1.0') {
+    validate_string($des_key)
+    if (size($des_key) != 24) {
+      fail('You must specify a 24 char key to encrypt user IMAP passwords')
+    }
   }
 
   #LB: using new Puppet 3.7 contains method to anchor subclasses to

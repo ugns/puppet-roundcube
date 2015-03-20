@@ -13,6 +13,7 @@ class roundcube::params {
   $database_password  = 'roundcube'
   $database_ssl       = false
   $manage_database    = true
+  $product_name       = 'RoundCube Webmail'
 
   #LB: two different templates for two different versions of RoundCube
   $conf_file_template = "${module_name}/config.inc.php.erb"
@@ -29,7 +30,7 @@ class roundcube::params {
   #to detect the "base version" based on Operating System and use that
   #base version to decide things later on (like which conf file to use).
   if ($::osfamily == 'RedHat') {
-    if ($operatingsystem in [ 'RedHat', 'CentOS' ] and $::operatingsystemrelease == /^6/) {
+    if (($operatingsystem in [ 'RedHat', 'CentOS' ]) and ($::operatingsystemrelease =~ /^6/)) {
       $base_version       = '1.0'
       $package_list       = 'roundcubemail'
       $conf_file          = 'config.inc.php'
