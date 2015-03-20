@@ -1,11 +1,5 @@
 # == Class: roundcube::db::mysql
 #
-# Placeholder class to create a MySQL database for RoundCube.
-#
-# === Parameters
-#
-#   None
-#
-class roundcube::db::mysql {
-  #LB: not implementing yet
-}
+# Empty placeholder class for RoundCube MySQL. We don't need to do anything on the "client".
+#The database configuration is in the RoundCube config file.
+class roundcube::db::mysql { }
