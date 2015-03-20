@@ -1,25 +1,11 @@
 # == Class roundcube::install
 #
-class roundcube::install {
-  include roundcube::params
+class roundcube::install(
+  $package_list = $::roundcube::package_list
+) inherits roundcube {
 
-  if ! defined(Class[Apt::Backports]) {
-    class { 'apt::backports': }
-  }
-
-  apt::pin { 'roundcube':
-    packages => 'roundcube*',
-    priority => 500,
-    release  => "${::lsbdistcodename}-backports",
-  }->
-
-  package { ['roundcube', 'roundcube-core', 'roundcube-plugins']:
+  package { $package_list:
     ensure  => present,
-    require => Package["roundcube-${roundcube::backend}"],
-  }
-
-  package { "roundcube-${roundcube::backend}":
-    ensure => present,
   }
 
   if $::roundcube::extra_plugins_pkg {
@@ -28,4 +14,28 @@ class roundcube::install {
     }
   }
 
+  #LB: separating Debian specific stuff from original module for backwards compatability
+  if ($::osfamily == 'debian') {
+    if ! defined(Class[Apt::Backports]) {
+      class { 'apt::backports': }
+    }
+
+    apt::pin { 'roundcube':
+      packages => 'roundcube*',
+      priority => 500,
+      release  => "${::lsbdistcodename}-backports",
+      before   => Package[$package_list],
+    }
+
+    package { "roundcube-${roundcube::backend}":
+      ensure => present,
+      before => Package[$package_list],
+    }
+
+    exec { 'reconfigure-roundcube':
+      path        => '/usr/sbin:/usr/bin:/sbin:/bin',
+      refreshonly => true,
+      command     => 'dpkg-reconfigure roundcube-core',
+    }
+  }
 }

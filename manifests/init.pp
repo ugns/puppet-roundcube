@@ -8,8 +8,13 @@
 #   Explanation of what this parameter affects and what it defaults to.
 #
 class roundcube (
+  $base_version        = $::roundcube::params::base_version,
+  $package_list        = $::roundcube::params::package_list,
   $conf_dir            = $::roundcube::params::conf_dir,
   $conf_file           = $::roundcube::params::conf_file,
+  $conf_file_owner     = $::roundcube::params::conf_file_owner,
+  $conf_file_group     = $::roundcube::params::conf_file_group,
+  $conf_file_template  = $::roundcube::params::conf_file_template,
   $backend             = $::roundcube::params::backend,
   $database_host       = $::roundcube::params::database_host,
   $database_port       = $::roundcube::params::database_port,
@@ -56,14 +61,14 @@ class roundcube (
     validate_array($plugins)
   }
 
-  class { 'roundcube::install': } ->
-  class { 'roundcube::config': } ->
-  class { "roundcube::db::${backend}": } ->
-  Class['roundcube']
-
-  exec { 'reconfigure-roundcube':
-    path        => '/usr/sbin:/usr/bin:/sbin:/bin',
-    refreshonly => true,
-    command     => 'dpkg-reconfigure roundcube-core',
-  }
+  #LB: using new Puppet 3.7 contains method to anchor subclasses to
+  #parent class while at the same time allow users to take advantage of
+  #automatic module data bindings.
+  contain roundcube::install
+  contain roundcube::config
+  contain "roundcube::db::${backend}"
+  
+  Class[roundcube::install]
+    -> Class[roundcube::config]
+    -> Class["roundcube::db::${backend}"]
 }
