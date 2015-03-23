@@ -4,7 +4,6 @@
 # It sets variables according to platform
 #
 class roundcube::params {
-  $conf_dir           = '/etc/roundcube'
   $conf_file_owner    = 'root'
   $backend            = 'pgsql'
   $database_host      = $::fqdn
@@ -34,6 +33,7 @@ class roundcube::params {
     if (($operatingsystem in [ 'RedHat', 'CentOS' ]) and ($::operatingsystemrelease =~ /^6/)) {
       $base_version       = '1.0'
       $package_list       = 'roundcubemail'
+      $conf_dir           = '/etc/roundcubemail'
       $conf_file          = 'config.inc.php'
       $conf_file_group    = 'apache'
       $extra_plugins_pkg  = false
@@ -41,6 +41,7 @@ class roundcube::params {
   } elsif ($::osfamily == 'debian') {
     $base_version       = '0.x'
     $package_list       = ['roundcube', 'roundcube-core', 'roundcube-plugins']
+    $conf_dir           = '/etc/roundcube'
     $conf_file          = 'main.inc.php'
     $conf_file_group    = 'www-data'
     $extra_plugins_pkg  = true
