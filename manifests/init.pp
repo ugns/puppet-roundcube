@@ -50,7 +50,6 @@ class roundcube (
   $default_font        = undef,
   $extra_config        = undef,
 ) inherits roundcube::params {
-
   validate_re($backend, '^(mysql|pgsql|sqlite3)$')
   validate_bool($database_ssl)
   validate_absolute_path($conf_dir)

@@ -6,6 +6,7 @@
 class roundcube::params {
   $conf_file_owner    = 'root'
   $backend            = 'pgsql'
+  $database_port       = '5432'
   $database_host      = $::fqdn
   $database_name      = 'roundcube'
   $database_username  = 'roundcube'
@@ -20,12 +21,6 @@ class roundcube::params {
   $conf_file_template = "${module_name}/config.inc.php.erb"
   $main_inc_php_erb   = "${module_name}/main.inc.php.erb"
 
-  #LB: default database port should depend on the backend
-  $database_port = $backend ? {
-    'pgsql' => '5432',
-    'mysql' => '3306',
-    default => undef,
-  }
   #LB: the config file changes in roundcube 1.0. To preserve backwards
   #compatibility with the original module author (who uses Debian) I am attempting
   #to detect the "base version" based on Operating System and use that
