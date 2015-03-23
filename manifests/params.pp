@@ -14,6 +14,7 @@ class roundcube::params {
   $database_ssl       = false
   $manage_database    = true
   $product_name       = 'RoundCube Webmail'
+  $plugins            = [ 'archive', 'zipdownload' ]
 
   #LB: two different templates for two different versions of RoundCube
   $conf_file_template = "${module_name}/config.inc.php.erb"
