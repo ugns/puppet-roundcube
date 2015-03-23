@@ -7,7 +7,7 @@ class roundcube::config(
   $conf_dir           = $::roundcube::conf_dir,
   $conf_file          = $::roundcube::conf_file,
   $conf_file_owner    = $::roundcube::conf_file_owner,
-  $conf_file_group    = $::roundcube::conf_file_owner,
+  $conf_file_group    = $::roundcube::conf_file_group,
   $conf_file_template = $::roundcube::conf_file_template,
   $main_inc_php_erb   = $::roundcube::main_inc_php_erb,
 ) inherits roundcube {
