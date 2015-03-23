@@ -76,7 +76,7 @@ $config['product_name'] = '<%= @product_name %>';
 $config['des_key'] = <%= @des_key %>
 
 // List of active plugins (in plugins/ directory)
-$rcmail_config['plugins'] = array(<%= "'#{@plugins.join("','")}'" unless defined?(@plugins) == nil %>);
+$config['plugins'] = array(<%= "'#{@plugins.join("','")}'" unless defined?(@plugins) == nil %>);
 
 // skin name: folder from skins/
 $config['skin'] = 'larry';
