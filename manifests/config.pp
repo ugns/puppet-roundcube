@@ -10,6 +10,12 @@ class roundcube::config(
   $conf_file_group    = $::roundcube::conf_file_group,
   $conf_file_template = $::roundcube::conf_file_template,
   $main_inc_php_erb   = $::roundcube::main_inc_php_erb,
+  $backend            = $::roundcube::backend,
+  $database_host      = $::roundcube::database_host,
+  $database_port      = $::roundcube::database_port,
+  $database_name      = $::roundcube::database_name,
+  $database_username  = $::roundcube::database_username,
+  $database_password  = $::roundcube::database_password,
 ) inherits roundcube {
 
   #LB: selectively determine which template to use using the base_version.
