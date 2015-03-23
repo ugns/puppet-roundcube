@@ -73,7 +73,7 @@ $config['product_name'] = '<%= @product_name %>';
 // in the session record (and the client cookie if remember password is enabled).
 // please provide a string of exactly 24 chars.
 // YOUR KEY MUST BE DIFFERENT THAN THE SAMPLE VALUE FOR SECURITY REASONS
-$config['des_key'] = <%= @des_key %>
+$config['des_key'] = '<%= @des_key %>';
 
 // List of active plugins (in plugins/ directory)
 $config['plugins'] = array(<%= "'#{@plugins.join("','")}'" unless defined?(@plugins) == nil %>);
