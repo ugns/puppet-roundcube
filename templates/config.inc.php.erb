@@ -84,7 +84,7 @@ $config['skin'] = 'larry';
 #All entries after here are generated from the extra_config hash in this Puppet module
 <% if @extra_config -%>
 <%   @extra_config.each do |key,value| -%>
-$config['<%= key %>'] = '<%= @value %>';
+$config['<%= key %>'] = '<%= value %>';
 
 <%    end -%>
 <% end -%>
