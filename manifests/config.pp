@@ -46,4 +46,11 @@ class roundcube::config(
       target => '/etc/javascript-common/javascript-common.conf',
     }
   }
+
+  #LB: logrotate file for RC 1.1.1 is broken and doesn't include all files.
+  file { '/etc/logrotate.d/roundcubemail':
+    ensure  => present,
+    content => template("${module_name}/roundcubemail.logrotate.erb"),
+    mode    => '0644',
+  }
 }

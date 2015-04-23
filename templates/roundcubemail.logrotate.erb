@@ -1,0 +1,7 @@
+/var/log/roundcubemail/errors /var/log/roundcubemail/imap /var/log/roundcubemail/sql /var/log/roundcubemail/sendmail {
+    missingok
+    su root apache
+    notifempty
+    size 30k
+    create 0660 <%= @conf_file_owner %> <%= @conf_file_group %>
+}
