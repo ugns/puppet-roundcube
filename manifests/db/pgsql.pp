@@ -47,7 +47,7 @@ class roundcube::db::pgsql {
     value   => "'${roundcube::database_ssl}'",
   }
 
-  postgres::validate_db_connection('validate roundcube postgres connection':
+  postgres::validate_db_connection{'validate roundcube postgres connection':
     database_host     => $roundcube::database_host,
     database_username => $roundcube::database_username,
     database_password => $roundcube::database_password,
